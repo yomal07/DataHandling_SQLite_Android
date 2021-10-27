@@ -2,10 +2,14 @@ package com.example.datahandling.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBHelper extends SQLiteOpenHelper {
     //database name
@@ -38,6 +42,42 @@ public class DBHelper extends SQLiteOpenHelper {
 
         //using the insert method in the SQLiteDatabase
         long result = db.insert(UsersMaster.Users.TABLE_NAME,null,contentValues);
+    }
+
+    public List selectAll(){
+        //object creation of the db in read mode
+        SQLiteDatabase db = getReadableDatabase();
+
+        String [] projection = {
+                UsersMaster.Users._ID,
+                UsersMaster.Users.COL_USERNAME,
+                UsersMaster.Users.COL_PASSWORD,
+        };
+
+        String sort = UsersMaster.Users._ID + " DESC";
+
+        Cursor cursor = db.query(
+                UsersMaster.Users.TABLE_NAME,
+                projection,
+                null,
+                null,
+                null,
+                null,
+                sort
+        );
+
+        List user = new ArrayList <> ();
+
+        while(cursor.moveToNext()){
+            String username = cursor.getString(cursor.getColumnIndexOrThrow(UsersMaster.Users.COL_USERNAME));
+            String password = cursor.getString(cursor.getColumnIndexOrThrow(UsersMaster.Users.COL_PASSWORD));
+
+            user.add(username + " : " + password);
+        }
+        cursor.close();
+
+        return user;
+
     }
 
     @Override
