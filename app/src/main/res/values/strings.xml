@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">DataHandling</string>
+    <string name="tv_pwd">Password:</string>
+    <string name="tv_username">Username:</string>
+    <string name="hint_username">Enter the username</string>
+    <string name="hint_password">Enter the password</string>
+    <string name="btn_selectall">SELECT ALL</string>
+    <string name="btn_add">ADD</string>
+</resources>
