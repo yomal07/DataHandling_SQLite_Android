@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void selectAll(){
+    public void selectAll(View view){
         DBHelper dbHelper =  new DBHelper(this);
 
         //get the details from the database
