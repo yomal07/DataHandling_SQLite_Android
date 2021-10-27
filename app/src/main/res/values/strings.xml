@@ -6,4 +6,7 @@
     <string name="hint_password">Enter the password</string>
     <string name="btn_selectall">SELECT ALL</string>
     <string name="btn_add">ADD</string>
+    <string name="btn_signin">SIGN IN</string>
+    <string name="btn_update">UPDATE</string>
+    <string name="btn_delete">DELETE</string>
 </resources>
