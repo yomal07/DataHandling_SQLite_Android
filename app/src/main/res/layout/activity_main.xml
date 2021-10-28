@@ -44,8 +44,7 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="120dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/tv_username"
-        android:autofillHints=""
-        android:inputType="" />
+        />
 
     <EditText
         android:id="@+id/et_password"
@@ -56,8 +55,7 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/tv_pwd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.819"
-        app:layout_constraintStart_toStartOf="parent"
-        android:autofillHints="" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btn_selectAll"
