@@ -5,8 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.view.View;
 
 import androidx.annotation.Nullable;
+
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +35,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
+    //insert data
     public void addUser(String username, String password){
         //object creation of the db in write mode
         SQLiteDatabase db = getWritableDatabase();
@@ -44,6 +49,7 @@ public class DBHelper extends SQLiteOpenHelper {
         long result = db.insert(UsersMaster.Users.TABLE_NAME,null,contentValues);
     }
 
+    //read all data
     public List selectAll(){
         //object creation of the db in read mode
         SQLiteDatabase db = getReadableDatabase();
@@ -78,6 +84,37 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return user;
 
+    }
+
+    //delete data
+    public void deleteInfo(String userName){
+        SQLiteDatabase db = getReadableDatabase();
+        String selection = UsersMaster.Users.COL_USERNAME + " LIKE ?";
+        String [] selectionArgs = { userName };
+        db.delete(UsersMaster.Users.TABLE_NAME,selection,selectionArgs);
+
+
+    }
+
+    //update data
+    public void editUser(View view,String userName, String password){
+        //object creation of db in read mode
+        SQLiteDatabase db = getReadableDatabase();
+
+        //create an object of content values
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(UsersMaster.Users.COL_PASSWORD,password);
+
+        //specify the rows to be deleted
+        String selection = UsersMaster.Users.COL_USERNAME + " LIKE ?";
+        String[] selectionArgs = {userName};
+
+        int count = db.update(UsersMaster.Users.TABLE_NAME,contentValues,selection,selectionArgs);
+
+        //implementing the snackbar
+        Snackbar snackbar = Snackbar.make(view,count+" rows were affected", Snackbar.LENGTH_LONG);
+        snackbar.setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE);
+        snackbar.show();
     }
 
     @Override
