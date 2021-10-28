@@ -17,21 +17,21 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText username, password;
-    Button selectall, add, update, delete, signin;
+    EditText ET_username, ET_password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        username = findViewById(R.id.et_username);
-        password = findViewById(R.id.et_password);
+        ET_username = findViewById(R.id.et_username);
+        ET_password = findViewById(R.id.et_password);
     }
 
+    //onclick event for ADD
     public void addUser(View view){
-        String uName = username.getText().toString();
-        String pwd = password.getText().toString();
+        String uName = ET_username.getText().toString();
+        String pwd = ET_password.getText().toString();
         DBHelper dbHelper = new DBHelper(this);
 
         if(uName.isEmpty()){
@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //onClick event for SELECTALL
     public void selectAll(View view){
         DBHelper dbHelper =  new DBHelper(this);
 
@@ -59,6 +60,10 @@ public class MainActivity extends AppCompatActivity {
         builder.setItems(userInfo, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                String username = userInfo[i].split(":")[0];
+
+                ET_username.setText(username);
+                ET_password.setText("*******");
 
             }
         });
@@ -72,5 +77,40 @@ public class MainActivity extends AppCompatActivity {
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    //onclick event for DELETE
+    public void deleteUser(View view){
+        DBHelper dbHelper = new DBHelper(this);
+
+        String userName = ET_username.getText().toString();
+
+        if(userName.isEmpty()){
+            Toast.makeText(this, "Please select user to Delete", Toast.LENGTH_SHORT).show();
+        }else{
+            dbHelper.deleteInfo(userName);
+            Toast.makeText(this, "User deleted!", Toast.LENGTH_SHORT).show();
+
+            ET_username.setText("");
+            ET_password.setText("");
+        }
+
+    }
+
+
+    //onclick event for UPDATE
+    public void update(View view){
+        DBHelper dbHelper = new DBHelper(this);
+
+        String username = ET_username.getText().toString();
+        String password = ET_password.getText().toString();
+
+        if(username.isEmpty()){
+            Toast.makeText(this,"Username is empty",Toast.LENGTH_SHORT).show();
+        }else if(password.isEmpty()){
+            Toast.makeText(this,"Password is required",Toast.LENGTH_SHORT).show();
+        }else{
+            dbHelper.editUser(view,username,password);
+        }
     }
 }
